@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import TransactionForm from "./TransactionForm";
 import { useTransactions } from "../context/transactioncontext";
-import { LayoutDashboard, Receipt, Plus } from "lucide-react";
 
 export default function Layout() {
   const { isupdate, cancelEdit } = useTransactions();
@@ -15,25 +14,18 @@ export default function Layout() {
     if (isupdate) cancelEdit();
   };
 
-  const mobileNavLinkClass = ({ isActive }) =>
-    `flex flex-col items-center justify-center gap-1 py-1 px-3 text-[11px] font-semibold transition ${
-      isActive
-        ? "text-indigo-400"
-        : "text-slate-400 hover:text-slate-200"
-    }`;
-
   return (
-    <div className="relative min-h-screen bg-slate-900 text-slate-100 selection:bg-indigo-500 selection:text-white pb-20 sm:pb-0">
+    <div className="relative min-h-screen bg-slate-900 text-slate-100 selection:bg-indigo-500 selection:text-white">
       {/* Background ambient neon glows */}
       <div className="pointer-events-none fixed -top-40 -left-40 h-[500px] w-[500px] rounded-full bg-indigo-500/10 blur-[130px]" />
       <div className="pointer-events-none fixed top-1/3 -right-40 h-[500px] w-[500px] rounded-full bg-emerald-500/10 blur-[130px]" />
       <div className="pointer-events-none fixed -bottom-40 left-1/3 h-[500px] w-[500px] rounded-full bg-rose-500/10 blur-[130px]" />
 
-      {/* Top Navbar */}
+      {/* Top Navbar with responsive Mobile Sidebar Drawer */}
       <Navbar onOpenAddModal={openAddModal} />
 
       {/* Main Routed Content */}
-      <main className="relative z-10 mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <main className="relative z-10 mx-auto max-w-7xl px-3 py-5 sm:px-6 sm:py-6 lg:px-8">
         <Outlet context={{ onOpenAddModal: openAddModal }} />
       </main>
 
@@ -51,29 +43,6 @@ export default function Layout() {
           </div>
         </div>
       </footer>
-
-      {/* Mobile Bottom Navigation Bar (Hidden on sm and larger) */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-slate-800/80 bg-slate-900/90 backdrop-blur-xl sm:hidden">
-        <div className="flex items-center justify-around py-2">
-          <NavLink to="/" end className={mobileNavLinkClass}>
-            <LayoutDashboard className="h-5 w-5" />
-            <span>Dashboard</span>
-          </NavLink>
-
-          {/* Quick Add Floating Center Button */}
-          <button
-            onClick={openAddModal}
-            className="-mt-5 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-tr from-indigo-600 to-indigo-500 text-white shadow-lg shadow-indigo-500/40 border-2 border-slate-900 active:scale-95 transition"
-          >
-            <Plus className="h-6 w-6" />
-          </button>
-
-          <NavLink to="/transactions" className={mobileNavLinkClass}>
-            <Receipt className="h-5 w-5" />
-            <span>Transactions</span>
-          </NavLink>
-        </div>
-      </div>
 
       {/* Modal for Add / Edit Transaction */}
       {(isModalOpen || isupdate) && (

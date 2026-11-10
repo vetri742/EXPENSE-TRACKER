@@ -163,10 +163,10 @@ export default function ChartsSection() {
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
       {/* Chart 1: Category Breakdown Donut / Pie Chart (5 Cols on LG) */}
-      <div className="flex flex-col rounded-2xl border border-slate-700/50 bg-slate-800/60 p-6 shadow-xl backdrop-blur-md lg:col-span-5">
+      <div className="flex flex-col rounded-2xl border border-slate-700/50 bg-slate-800/60 p-4 sm:p-6 shadow-xl backdrop-blur-md lg:col-span-5 min-w-0 w-full overflow-hidden">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 shrink-0">
               <PieIcon className="h-4 w-4" />
             </div>
             <div>
@@ -192,10 +192,10 @@ export default function ChartsSection() {
             </p>
           </div>
         ) : (
-          <div className="flex flex-col flex-1">
+          <div className="flex flex-col flex-1 min-w-0">
             {/* Donut Chart container */}
-            <div className="relative h-64 w-full">
-              <ResponsiveContainer width="100%" height="100%">
+            <div className="relative h-60 sm:h-64 w-full min-w-0">
+              <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={220}>
                 <PieChart>
                   <RechartsTooltip content={<CustomDonutTooltip />} />
                   <Pie
@@ -259,10 +259,10 @@ export default function ChartsSection() {
       </div>
 
       {/* Chart 2: Monthly Cashflow Bar Chart (7 Cols on LG) */}
-      <div className="flex flex-col rounded-2xl border border-slate-700/50 bg-slate-800/60 p-6 shadow-xl backdrop-blur-md lg:col-span-7">
-        <div className="flex items-center justify-between mb-4">
+      <div className="flex flex-col rounded-2xl border border-slate-700/50 bg-slate-800/60 p-4 sm:p-6 shadow-xl backdrop-blur-md lg:col-span-7 min-w-0 w-full overflow-hidden">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shrink-0">
               <BarChart3 className="h-4 w-4" />
             </div>
             <div>
@@ -273,7 +273,7 @@ export default function ChartsSection() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3 text-xs">
+          <div className="flex items-center gap-3 text-xs self-start sm:self-auto">
             <div className="flex items-center gap-1.5">
               <span className="h-2.5 w-2.5 rounded-sm bg-emerald-500" />
               <span className="text-slate-300">Income</span>
@@ -286,12 +286,12 @@ export default function ChartsSection() {
         </div>
 
         {/* Bar Chart Container */}
-        <div className="relative h-72 w-full flex-1">
-          <ResponsiveContainer width="100%" height="100%">
+        <div className="relative h-64 sm:h-72 w-full min-w-0">
+          <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={240}>
             <BarChart
               data={monthlyData}
-              margin={{ top: 10, right: 10, left: -15, bottom: 0 }}
-              barGap={6}
+              margin={{ top: 10, right: 10, left: -5, bottom: 0 }}
+              barGap={3}
             >
               <CartesianGrid
                 strokeDasharray="3 3"
@@ -302,13 +302,14 @@ export default function ChartsSection() {
               <XAxis
                 dataKey="month"
                 stroke="#64748b"
-                tick={{ fill: "#94a3b8", fontSize: 11 }}
+                tick={{ fill: "#94a3b8", fontSize: 10 }}
                 axisLine={{ stroke: "#334155" }}
                 tickLine={false}
               />
               <YAxis
                 stroke="#64748b"
-                tick={{ fill: "#94a3b8", fontSize: 11 }}
+                tick={{ fill: "#94a3b8", fontSize: 10 }}
+                width={38}
                 axisLine={false}
                 tickLine={false}
                 tickFormatter={(val) => `₹${val >= 1000 ? `${(val / 1000).toFixed(0)}k` : val}`}
@@ -321,15 +322,15 @@ export default function ChartsSection() {
                 dataKey="income"
                 name="Income"
                 fill="#10b981"
-                radius={[6, 6, 0, 0]}
-                maxBarSize={40}
+                radius={[4, 4, 0, 0]}
+                maxBarSize={28}
               />
               <Bar
                 dataKey="expense"
                 name="Expenses"
                 fill="#f43f5e"
-                radius={[6, 6, 0, 0]}
-                maxBarSize={40}
+                radius={[4, 4, 0, 0]}
+                maxBarSize={28}
               />
             </BarChart>
           </ResponsiveContainer>
